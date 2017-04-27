@@ -1,0 +1,235 @@
+1-1.Student:
+=======================================================================
+package com.student1;
+
+import java.io.Serializable;
+
+public class Student implements StudentInt, Serializable {
+	
+	private int rollNo;
+	private String name;
+	private int subject1;
+	private int subject2;
+	private int subject3;
+	private int totalMarks;
+
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    public void setRollNo(int rollNo) {
+        this.rollNo = rollNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSubject1() {
+        return subject1;
+    }
+
+    public void setSubject1(int subject1) {
+        this.subject1 = subject1;
+    }
+
+    public int getSubject2() {
+        return subject2;
+    }
+
+    public void setSubject2(int subject2) {
+        this.subject2 = subject2;
+    }
+
+    public int getSubject3() {
+        return subject3;
+    }
+
+    public void setSubject3(int subject3) {
+        this.subject3 = subject3;
+    }
+
+    public int getTotalMarks() {
+        return totalMarks;
+    }
+
+   
+
+	
+
+	// method is to initialise details
+	@Override
+	public void readStudInfo(int rollNo, String name, int subject1, int subject2, int subject3) {
+		this.rollNo = rollNo;
+		this.name = name;
+		this.subject1 = subject1;
+		this.subject2 = subject2;
+		this.subject3 = subject3;
+		
+
+	}
+
+	// method to print totalmarks
+	@Override
+	public void calcTotal() {
+            totalMarks=subject1+subject2+subject3;
+		System.out.println("Total marks obtained:" + this.totalMarks);
+
+	}
+
+	// method to print student details
+	@Override
+	public void printStudInfo() {
+		System.out.println("Student rollno:" + this.rollNo);
+		System.out.println("Student name:" + this.name);
+		System.out.println("Marks obtained in subject1:" + this.subject1);
+		System.out.println("Marks obtained in subject2:" + this.subject2);
+		System.out.println("Marks obtained in subject3:" + this.subject3);
+                
+
+	}
+
+    @Override
+    public String toString() {
+        return "Student{" + "rollNo=" + rollNo + ", name=" + name + ", subject1=" + subject1 + ", subject2=" + subject2 + ", subject3=" + subject3 +  '}';
+    }
+
+}
+
+ ---------------------------------------------------------------------------------------------------------------------------------------
+STUDENT INT:
+
+
+package com.student1;
+
+public interface StudentInt {
+	public void readStudInfo(int rollNo, String name, int subject1, int subject2, int subject3);
+	public void calcTotal();
+	public void printStudInfo();
+	
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.test1;
+
+import com.package1.*;
+import java.util.Scanner;
+
+/**
+ *
+ * @author techm
+ */
+public class StudentImp {
+    public static void main(String[] args) {
+        Scanner s=new Scanner(System.in);
+        Student st=new Student();
+        System.out.println("enter the roll no of student");
+        st.setRollNo(s.nextInt());
+        System.out.println("enter the name of student");
+        st.setName(s.next());
+        System.out.println("Enter marks in subject1..");
+        st.setSubject1(s.nextInt());
+        System.out.println("Enter marks in subject2..");
+       st.setSubject2(s.nextInt());
+      System.out.println("Enter marks in subject3..");
+      st.setSubject3(s.nextInt());
+        st.readStudInfo(st.getRollNo(),st.getName(),st.getSubject1(),st.getSubject2(),st.getSubject3());
+        st.calcTotal(st.getSubject1(),st.getSubject2(),st.getSubject3());
+        st.printStudInfo();
+        
+       
+        
+    }
+
+ }
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+1-2.ITEM:
+================================================================================
+package item;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Scanner;
+
+public class Item  {
+   int  itemId;
+String itemName;
+
+    public Item(int itemId, String itemName) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+    }
+     public void display(){
+          
+            System.out.println(itemId+"                 "+itemName);
+     }
+}
+
+
+class Thread1 implements Runnable{
+Scanner s=new Scanner(System.in);
+ArrayList<Item> a1=new ArrayList<>();
+       Item[ ] item =new Item[5];
+    @Override
+    public void run() {
+      synchronized (this) {
+          for(int i=0;i<5;i++){
+            System.out.println("Enter Itemid,ItemName of item "+i);
+            item[i] =new Item(s.nextInt(),s.next());
+            a1.add(item[i]);
+        }
+  }
+}
+}
+    class Thread2 implements Runnable{
+      Thread1 first;// To get the all details from FirstThread
+      Thread2(Thread1 ff) {
+         this.first = ff;
+}
+    public void run() {
+      synchronized (first) {
+ Iterator i = first.a1.iterator();
+System.out.println("Second thread get started to print the item details\n");
+System.out.println("The Item Details are");
+System.out.println("displaying details of item");
+          System.out.println(" ITEMID               ITEMNAME");
+          System.out.println("--------------------------------------------------");
+while (i.hasNext()) {
+Item item1 = (Item) (i.next());// type casting into the Item
+// object
+
+item1.display();// calling the display method in Item class to get the details
+			}
+       }
+     
+        }
+    
+        }
+
+class threadTest{
+    
+    public static void main(String[] args) {
+        
+        Thread1 t=new Thread1();
+        Thread t1=new Thread(t);
+        t1.start();
+        Thread2 T=new Thread2(t);
+        Thread t2=new Thread(T);
+        t2.start();
+
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------

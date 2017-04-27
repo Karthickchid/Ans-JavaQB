@@ -1,0 +1,118 @@
+8-1 FLAT : 
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Flat {
+    
+    private int flatId;
+  private String flatType;			
+   private double flatCost;                                 
+
+    public Flat(int flatId, String flatType, double flatCost) {
+        this.flatId = flatId;
+        this.flatType = flatType;
+        this.flatCost = flatCost;
+    }
+
+    public int getFlatId() {
+        return flatId;
+    }
+
+    public String getFlatType() {
+        return flatType;
+    }
+
+    public double getFlatCost() {
+        return flatCost;
+    }
+
+    public void setFlatId(int flatId) {
+        this.flatId = flatId;
+    }
+
+    public void setFlatType(String flatType) {
+        if (flatType.matches("1BHK")){
+        this.flatType = flatType;
+    }
+        else if (flatType.matches("2BHK")){
+        this.flatType = flatType;
+    }
+        else if (flatType.matches("3BHK")){
+        this.flatType = flatType;
+    }
+        else
+            System.out.println("InvalidInputException");
+    }
+    public void setFlatCost(double flatCost) {
+        if(flatCost>1000000){
+        this.flatCost = flatCost;
+    }
+else
+            System.out.println("InvalidInputException");
+    
+}
+}
+
+
+class Employee {
+                     int  empId;		
+	String	empName;	
+	ArrayList 	flatsSold;	
+
+    public Employee(int empId, String empName) {
+        
+        this.empId = empId;
+        this.empName = empName;
+        
+    }
+       
+         public  double calculateIncentive (String flatType,double flatCost) {
+            double incentive;
+             if (flatType.matches("1BHK")){
+                 incentive=(0.04*flatCost);
+                  System.out.println(incentive);
+             }
+        if (flatType.matches("2BHK")){
+                 incentive=(0.06*flatCost);
+                  System.out.println(incentive);
+             }
+        if (flatType.matches("3BHK")){
+                 incentive=(0.08*flatCost);
+                  System.out.println(incentive);
+             }
+       System.out.println();
+       return 0;
+        }
+      	
+
+           public void addFlat (Flat f ){ 
+           ArrayList<Flat> a=new ArrayList<>();
+           a.add(f);
+}
+	public void generateReport(int flatId,String flatType,double flatCost ){
+           System.out.println("EmpID : _________		Empname : _______"); 
+           System.out.println("Flat ID	Flat Type	Flat Cost");
+           System.out.println(flatId+"  "+ flatType +"	"+flatCost);
+            
+        }}
+class Testincentive{
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        System.out.println("Enter the details of flat");
+        Flat[] f=new Flat[2];
+        System.out.println("enter flatType and flatcost");
+         f[0]=new Flat(s.nextInt(),s.next(),s.nextDouble());
+        
+
+       Employee e1=new Employee(s.nextInt(),s.next());
+        
+        f[0].calculateIncentive(flatType, flatCost);
+       
+        
+        
+        
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,225 @@
+========================================================================
+
+
+2-1 BOOK & BOOKUTIL:
+
+package com.book;
+public class Book {
+public String  bookId;		
+public String   title;		
+public String   author;		
+public String category ;	
+public float price;		
+
+    public Book(String bookId, String title, String author, String category, float price) throws InvalidBookException {
+        if((bookId.length()!=4)&&(bookId.charAt(0)!='B'))
+{
+ this.bookId=bookId;
+}
+else
+              {   
+               throw new InvalidBookException();
+          }
+         
+       this.title = title;
+       this.author = author;     
+       if(category.equals("Friction")||category.equals("Science")||category.equals("Technology")||category.equals("Others")) {         
+    this.category = category;
+        }
+       else {
+             throw new InvalidBookException();
+        }
+        if(price>0){
+            this.price = price;}
+             else {
+             throw new InvalidBookException();     
+        }  
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public String getAuthor() {
+        return author;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public float getPrice() {
+        return price;
+    }    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.book;
+import java.util.*;
+import java.util.ArrayList;
+import com.book.BookStore;
+public class BookStore {
+    ArrayList<Book> bookStore=new ArrayList<Book>(); 
+    public void addBook(Book b){
+        bookStore.add(b);
+    }
+    public void searchByTitle(String title){
+        for(int i=0;i<3;i++){
+        if(bookStore.get(i).getTitle().equals(title)){
+            System.out.println("Displaying thedetails of the book:"+title);
+            System.out.println("Book ID:"+bookStore.get(i).getBookId()+"  "+"BookName:"+bookStore.get(i).getTitle()+"  "+"Bookauthor"+bookStore.get(i).getAuthor()+"   "+"Book Category:"+bookStore.get(i).getCategory()+"  "+"Book Price:"+bookStore.get(i).getPrice());
+        } 
+        }
+    }
+
+        public void searchByAuthor(String author){
+        for(int i=0;i<3;i++){
+        if(bookStore.get(i).getAuthor().equals(author)){
+            System.out.println("Displaying the details of the book:"+author);
+            System.out.println("Book ID:"+bookStore.get(i).getBookId()+"BookName:"+bookStore.get(i).getTitle()+"Bookauthor"+bookStore.get(i).getAuthor()+"Book Category:"+bookStore.get(i).getCategory()+"Book Price:"+bookStore.get(i).getPrice());
+        }
+        else
+            System.out.println("book not found");
+             
+        }
+    }
+        public void displayAll(){
+            for(int i=0;i<3;i++){
+            System.out.println("Displaying the details of the all books");
+            System.out.println("Book ID:"+bookStore.get(i).getBookId()+"BookName:"+bookStore.get(i).getTitle()+"Bookauthor"+bookStore.get(i).getAuthor()+"Book Category:"+bookStore.get(i).getCategory()+"Book Price:"+bookStore.get(i).getPrice());
+        }
+            
+        }
+    
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.book;
+public class InvalidBookException extends Exception{
+    public void InvalidBookException(){
+        System.out.println("invalid book exception");
+        
+    }
+    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.bookutil;
+import  com.book.BookStore;
+import com.book.Book;
+import com.book.InvalidBookException;
+import java.util.Scanner;
+public class BookUtil {
+    public static void main(String[] args) throws InvalidBookException{
+        Scanner s=new Scanner(System.in);
+        System.out.println("enter the details of book1");
+        System.out.println("enter bookId,book title,book author, book cataegory,book price");
+        Book b1=new Book(s.next(),s.next(),s.next(),s.next(),s.nextFloat());
+         System.out.println("enter the details of book2");
+        System.out.println("enter bookId,book title,book author, book cataegory,book price");
+         Book b2=new Book(s.next(),s.next(),s.next(),s.next(),s.nextFloat());  
+          System.out.println("enter the details of book3");
+        System.out.println("enter bookId,book title,book author, book cataegory,book price");
+         Book b3=new Book(s.next(),s.next(),s.next(),s.next(),s.nextFloat());
+         BookStore B=new BookStore();
+         B.addBook(b1);
+         B.addBook(b2);
+         B.addBook(b3);
+         System.out.println("enter the title of the book you want to search");
+         String Title=s.next();
+         B.searchByTitle(Title);
+          System.out.println("enter the author of the book you want to search");
+          String Author=s.next();
+         B.searchByAuthor(Author);
+         B.displayAll();
+         
+         
+        
+    }
+    
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=============================================================================================
+2-2 THREAD INTERFACE LANG:
+
+package com.thread;
+public class CLang implements Language,Runnable{
+
+    public void run(){
+        
+     showMessage();
+    }
+    public void showMessage(){
+        
+        System.out.println("C Programming is running");
+    }
+    
+    
+    
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+package com.thread;
+public class JavaLang implements Language,Runnable{
+    String name;
+    Thread t;
+    public void run(){
+     showMessage();
+    }
+
+    @Override
+    public void showMessage(){
+        
+        System.out.println("Java Programming is running");
+    }
+
+    
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+package com.thread;
+
+
+public interface Language  {
+ public void showMessage();
+    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.thread;
+import com.thread.*;
+import java.util.Scanner;
+public class TestClient {
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+       JavaLang t=new JavaLang();
+      
+      CLang T=new CLang();
+      Thread t1=new Thread(t);
+      Thread t2=new Thread(T);
+     
+      System.out.println("Enter your favorite language to be run first");
+      String first;
+      first=s.next();
+      if(first.equals("Java")){
+          t1.setPriority(10);
+          t2.setPriority(1);
+          System.out.println("priority set for javaLang"); 
+          t1.start();
+          t2.start();
+          }
+      else if(first.equals("C")){
+          t2.setPriority(10);
+          t1.setPriority(1);
+          System.out.println("priority set for CLang"); 
+          t2.start();
+            t1.start();
+           
+      }
+      
+      System.out.println("priority of cLang thread:"+t2.getPriority()); 
+        System.out.println("priority of JavaLang thread:"+t1.getPriority()); 
+        
+    }
+    
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,240 @@
+6-1. BIG BAZAR
+
+package com.store.test;
+import com.store.*;
+import java.util.Scanner;
+import com.store.InvalidOrderException;
+
+public class TestClient{
+public static void main(String[] args) throws InvalidOrderException {
+Scanner sc = new Scanner(System.in);
+int orderId = (int) (Math.random() * 10000);
+System.out.println("please enter your name");
+String customerName = sc.next();
+float orderAmount = 0;
+System.out.println("please enter the type of order");
+String paymentOption = sc.next();
+	  
+	  Order od = new Order(orderId,customerName,orderAmount,paymentOption);
+	  OrderServiceUtil osc = new OrderServiceUtil(od);
+	  osc.addOrder(od);
+	  osc.searchOrder(orderId);
+	  osc.findTotal();
+	 boolean value = osc.validate();
+	  }
+}
+----------------------------------------------------------------------------------------------------------------------------------------------
+package com.store;
+
+
+ public class InvalidOrderException extends Exception  {
+	
+   InvalidOrderException(String s)
+  {
+	    super(s);
+	
+  }
+	
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------
+package com.store;
+
+public class Order {
+	
+	 private int orderId;
+	 private String customerName;
+	 private float orderAmount;
+	 private String paymentOption;
+	
+	 public Order(int orderId,String customerName,float orderAmount,String paymentOption) 
+	 {
+	   
+		 this.customerName=customerName;
+		 this.orderId=orderId;
+		 this.paymentOption=paymentOption;
+		 this.orderId=orderId;
+		  
+	 }
+	 
+	 
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+
+	public void setOrderAmount(float orderAmount) {
+		this.orderAmount = orderAmount;
+	}
+
+
+	public void setPaymentOption(String paymentOption) {
+		this.paymentOption = paymentOption;
+	}
+
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	
+
+	public float getOrderAmount() {
+		return orderAmount;
+	}
+
+	
+	public String getPaymentOption() {
+		return paymentOption;
+	}
+
+	
+
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------
+package com.store;
+
+import java.util.TreeMap;
+
+
+public class OrderServiceUtil {
+	
+	
+	Order order;
+    
+	 public OrderServiceUtil(Order order) {
+		super();
+		this.order = order;
+	}
+
+	
+	public void addOrder(Order o1)
+	{
+		
+		TreeMap<Integer,String> tm = new TreeMap<Integer,String>();
+		tm.put(o1.getOrderId(),o1.getCustomerName());
+		System.out.println("your order has been added ...");
+	}
+	
+	public Order searchOrder(int OrderId)
+	{
+		System.out.println("your ordered items has been found ..");
+		return order;
+	}
+	
+	public void findTotal()
+	{
+		order.setOrderAmount((int) (Math.random() * 100));
+		System.out.println("your bill amount is ....");
+		System.out.println(order.getOrderAmount());
+		
+	}
+
+	public boolean validate() throws InvalidOrderException
+	 {  
+	if(order.getOrderAmount()<100) throw new InvalidOrderException("amount should be greater than 100");	  
+	return false;
+		  
+		  
+		  /*if(order.getPaymentOption() =="COD" || order.getPaymentOption() =="InternetBanking") throw new InvalidOrderException("sorry COD is not allowed ..");
+		  
+			  return false;
+		*/
+		
+		  
+		 
+		 
+			 
+		
+		  }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------
+===============================================================================
+6-2. EMPLOYEE & STORE EMPLOYEE
+
+package second;
+
+import java.io.Serializable;
+
+public class Employee implements Serializable {
+	
+	int	empId		;
+	String empName; 	
+	int deptNo;
+	public int getEmpId() {
+		return empId;
+	}
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public int getDeptNo() {
+		return deptNo;
+	}
+	public void setDeptNo(int deptNo) {
+		this.deptNo = deptNo;
+	}
+	}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+package second;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Scanner;
+
+
+public class StoreEmployee {
+
+	
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	
+		System.out.println("enter the details of the employee ");
+		System.out.println("enter the employeeId");
+		Scanner sc = new Scanner(System.in);
+		int empId = sc.nextInt();
+		System.out.println("enter the employee name ");
+		String empName = sc.next(); 
+		System.out.println("enter the department_number");
+		int deptNo = sc.nextInt();
+		
+		Employee emp = new Employee();
+		emp.setDeptNo(deptNo);
+		emp.setEmpId(empId);
+		emp.setEmpName(empName);
+		
+		FileOutputStream fos = new FileOutputStream("employee.txt"); 
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(emp);
+		System.out.println("serialization done..");
+		FileInputStream fis = new FileInputStream(args[0]);
+
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		emp =   (Employee) ois.readObject();
+		System.out.println(emp.getDeptNo());
+	}
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+============================================================================================

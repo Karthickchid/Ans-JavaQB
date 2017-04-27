@@ -1,0 +1,228 @@
+4-1. CUSTOMER:
+
+package com.bill;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public abstract class Customer{
+    int custId;
+    String custName;
+    long mobileNumber; 
+
+    public Customer(int custId, String custName, long mobileNumber) {
+        this.custId = custId;
+        this.custName = custName;
+        this.mobileNumber = mobileNumber;
+    }
+    public int getCustId() {
+        return custId;
+    }
+
+    public void setCustId(int custId) {
+        this.custId = custId;
+    }
+
+    public String getCustName() {
+        return custName;
+    }
+
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
+
+    public long getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(long mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+       double calculateBill(int minutes){
+           return 1;
+       
+}
+}
+class PremiumCustomer extends Customer{
+    int billNo;
+    float billAmount;
+    
+    public PremiumCustomer(int custId, String custName, long  
+mobileNumber,int billNo, float billAmount) {
+        super(custId, custName, mobileNumber);
+        this.billNo=billNo;
+        this.billAmount=billAmount;
+        
+    }
+
+    public int getBillNo() {
+        return billNo;
+    }
+
+    public float getBillAmount() {
+        return billAmount;
+    }
+    
+    @Override
+    public  double calculateBill(int minutes){
+       int bill2;
+     
+         if(minutes<30)
+        { 
+         bill2 = (1*minutes);
+         }
+         else
+         bill2=(int) (0.5*minutes);
+         System.out.println("bill2:"+bill2);
+        return bill2;
+         
+     }
+}
+     class RegularCustomer extends Customer{
+         int billNo;
+    float billAmount;
+    public RegularCustomer(int custId, String custName, long  
+mobileNumber,int billNo,float billAmount) {
+        super(custId, custName, mobileNumber);
+        this.billAmount=billAmount;
+        this.billNo=billNo;
+    }
+
+   
+         @Override
+       public  double calculateBill(int minutes){
+         int bill1;
+     
+         if(minutes<30){
+         bill1 = (int)  (1.5*minutes);
+         System.out.println("bill1:"+bill1);}
+         else
+         { bill1=(int) (1*minutes);
+         System.out.println("bill1:"+bill1);}
+        return bill1;
+         
+     }
+     }
+        
+        class TestClient{
+            public static void main(String[] args){
+                Scanner s=new Scanner(System.in);
+                System.out.println("Enter the values of Regular Customer");
+                RegularCustomer m=new RegularCustomer(s.nextInt(),s.next 
+(),s.nextLong(),s.nextInt(),s.nextFloat());
+                System.out.println("Enter the values of premium Customer");
+               PremiumCustomer n=new PremiumCustomer(s.nextInt(),s.next 
+(),s.nextLong(),s.nextInt(),s.nextFloat());
+               m.calculateBill(20);
+               n.calculateBill(80);
+               Customer[] c=new Customer[2];
+                ArrayList<Customer> a1=new ArrayList<>();
+               a1.add(m);
+               a1.add(n);
+               System.out.println("contents of a1:");
+               Iterator<Customer> itr=a1.iterator();
+               while(itr.hasNext()){
+               Customer element=itr.next();
+               System.out.print(element+"");
+            }
+              
+             }
+        }
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package customer;
+
+
+import java.util.*;
+public class TestClient {
+    
+    public static void main(String args[])
+    {
+         Scanner in = new Scanner(System.in);
+         Customer[] c = new Customer[2];
+         System.out.println("enter premium customer details: custid, custname, mobile no, bill no, bill amount");
+         c[0] = new PremiumCustomer(in.nextInt(),in.next(),in.nextLong(),in.nextInt(),in.nextFloat());
+         System.out.println("enter regular customer details: custid, custname, mobile no, bill no, bill amount");
+         c[1] = new RegularCustomer(in.nextInt(),in.next(),in.nextLong(),in.nextInt(),in.nextFloat());
+         double bill = c[0].calculateBill(45)+c[1].calculateBill(15);
+         System.out.println("Total bill"+bill);
+        
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------
+=======================================================================================================
+4-2. GIVE ME FIVE:
+package four;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+
+
+public class GiveMeFive {
+
+	public static void main(String args[])throws IOException,NumberNotPresent{
+	try{
+	if(args.length!=5)
+		throw new NumberNotPresent();
+	}
+	catch(NumberNotPresent NNP)
+	{
+		System.out.println(NNP);
+		}
+	
+	try{
+		FileWriter fw=new FileWriter("C://NumberFile.txt",true);
+		File f1=new File("C://NumberFile.txt");
+		if(!f1.exists())
+		{
+			
+			PrintWriter pw = new PrintWriter(fw);
+            for(int i=0;i<5;i++)
+            {  pw.write(args[i]);}
+
+            pw.close(); 
+	           
+		}
+		else
+		{
+			
+            PrintWriter pw = new PrintWriter(fw);
+            for(int i=0;i<5;i++)
+            {  pw.append(args[i]);}
+
+            pw.close();
+		}
+		FileReader fr=new FileReader("C://NumberFile.txt");
+		int i;
+		while((i=fr.read())!=-1)
+		{
+		System.out.print((char)i);
+		
+		}
+		fr.close();
+	}
+	
+	catch(IOException ioe){
+		System.out.println(ioe);}
+	}
+	}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package four;
+
+public class NumberNotPresent extends Exception {
+	
+	public String toString(){
+		return "5 Numbers are not present";
+		}
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+=============

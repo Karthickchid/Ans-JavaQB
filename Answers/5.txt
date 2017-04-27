@@ -1,0 +1,150 @@
+5-1. ABSTRACT EMPLOYEE AND TECHNICAL
+
+package employee;
+public class DateOfJoin {
+    public int day;
+    public int month;
+    public int year;
+    
+    public DateOfJoin(int day,int month,int year)
+    {
+    this.day=day;
+    this.month=month;
+    this.year=year;
+    }
+    public void showDate()
+    {
+    System.out.println("day:"+day+"month:"+month+"year:"+year);
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+package employee;
+public  abstract class Employee {
+     public int empId;
+     public String empName;
+     public double basicSal;
+     //public DateOfJoin doj;
+     public Employee(int empId,String empName,double basicSal)
+     {
+         this.basicSal = basicSal;
+         this.empId = empId;
+         this.empName = empName;
+     }
+    
+     abstract public void calSal();
+     public void showDetails()
+     {
+     System.out.println("empId:"+empId);
+     System.out.println("empname:"+empName);
+     System.out.println("basicsal:"+basicSal);
+     }
+    
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------
+package employee;
+public class Operation extends Employee {
+     public String jobDesc;
+    public String grade;
+
+    public Operation(int empId,String empName,double basicSal,String jobDesc, String grade)
+    {
+        super(empId,empName,basicSal);
+        this.jobDesc = jobDesc;
+        this.grade = grade;
+    }
+   
+ public void showDetails()
+    {
+System.out.println("empId:"+empId+"empName:"+empName+"basicsal:"+basicSal);
+    System.out.println("jobDesc:"+jobDesc+"'grade:"+grade);
+    }
+    public void calSal()
+    {  
+    float bonus=(float) (0.05*basicSal);
+    System.out.println("bonus:"+bonus);
+    float totalIncome=(float) (basicSal+bonus);
+    System.out.println("totalIncome:"+totalIncome);
+    }
+}
+----------------------------------------------------------------------------------------------------
+package employee;
+public class Technical extends Employee {
+    String jobDesc;
+    String grade;
+    public Technical(int empId,String empName,double basicSal,String jobDesc,String grade)
+    {
+         super(empId,empName,basicSal);
+         this.grade=grade;
+         this.jobDesc=jobDesc;
+    }
+    public void showDetails()
+    {
+        System.out.println("empId:"+empId+"empName:"+empName+"basicsal:"+basicSal);
+    System.out.println("jobDesc:"+jobDesc+"'grade:"+grade);
+    }
+    public void calSal()
+    {    float bonus=(float) (0.1*basicSal);
+    System.out.println("bonus:"+bonus);
+    float totalIncome=(float) (basicSal+bonus);
+    System.out.println("totalIncome:"+totalIncome);
+    }
+    }
+----------------------------------------------------------------------------------------------------
+package testemployee;
+import employee.DateOfJoin;
+import employee.Employee;
+import employee.Operation;
+import employee.Technical;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
+public class TestEmployee {
+    public static void main(String[] b)
+    {
+        int empId;
+        String empName;
+        double basicSal;
+        String jobDesc;
+        String grade;
+        int[] a = new int[3];
+        Scanner sc=new Scanner(System.in);
+        Employee arr[]=new Employee[2];
+        System.out.println("enter the details of operational employee");
+        
+        empId = sc.nextInt();
+        empName = sc.next();
+        basicSal = sc.nextDouble();
+        jobDesc = sc.next();
+        grade = sc.next();
+        System.out.println("enter doj of operation");
+        for(int i=0;i<3;i++)
+        {
+            a[i] = sc.nextInt();
+        }
+        DateOfJoin doj = new DateOfJoin(a[0],a[1],a[2]);
+        doj.showDate();
+        arr[0] = new Operation(empId,empName,basicSal,jobDesc,grade);
+        arr[0].showDetails();
+        arr[0].calSal();
+        System.out.println("'enter the details of technical employee");
+         empId = sc.nextInt();
+        empName = sc.next();
+        basicSal = sc.nextDouble();
+        jobDesc = sc.next();
+        grade = sc.next();
+        System.out.println("enter doj of operation");
+        for(int i=0;i<3;i++)
+        {
+            a[i] = sc.nextInt();
+        }
+        doj.day = a[0];
+        doj.month = a[1];
+        doj.year = a[2];
+        doj.showDate();
+        arr[1] = new Technical(empId,empName,basicSal,jobDesc,grade);
+        arr[1].showDetails();
+        arr[1].calSal();
+       
+    }
+    }
+-------------------------------------------------------------------------------------------------------------------------------------------

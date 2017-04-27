@@ -1,0 +1,220 @@
+3-1. VEHICLE : 
+package com.vehicle.test;
+import  com.vehicle.*;
+import java.util.Scanner;
+public class TestVehicle {
+public static void main(String args[]) {
+	
+
+	Vehicle v=new Car(1111,true,"Petrol");
+	v.ignite();
+	Scanner sc=new Scanner(System.in);
+	System.out.println("enter flag value as 1 or -1:");
+	int flag=sc.nextInt();
+	v.changeGear(flag);
+	sc.close();
+	
+	Car c =(Car) v;
+	c.showCarDetails();
+	v.stop();
+	c.showCarDetails();
+}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.vehicle;
+
+public class Car extends Vehicle{
+	private static boolean powerStearing;
+	private static String fuelType;
+	
+	public Car(int vehicleNo,boolean powerStearing,String fuelType)
+	{
+			super(vehicleNo);
+			this.powerStearing=powerStearing;
+			if(fuelType=="Petrol"||fuelType=="Deisel"||fuelType=="Gas")
+				this.fuelType=fuelType;
+				else
+				System.out.println("Enter Fuel type Petrol,Deisel,Gas");
+			
+		}
+	
+	boolean getPowerStearing()
+	{
+	return powerStearing;
+	}
+	String getFuelType()
+	{	
+	return fuelType;	
+	}
+	int getVehicleNo()
+	{
+	return vehicleNo;
+	}
+	String getEngineStatus(){return engineStatus;}
+	int getCurrentGear(){return currentGear;}
+	
+	public void showCarDetails(){
+			System.out.println("Vehicle No: "+vehicleNo+" Power stearing available: "+powerStearing+" FuelType :"+fuelType+" Engine Status: "+engineStatus+" Current Gear"+currentGear);
+			
+}
+	public void ignite()
+	{
+		engineStatus="on";
+		currentGear=1;
+	}
+	
+	public void stop()
+	{
+		engineStatus="off";
+		currentGear=0;
+	}
+	
+	public int changeGear(int flag)
+	{
+		if(currentGear<6&&currentGear>0)
+		if(flag==1)
+			currentGear+=1;
+		else if(flag==-1)
+			currentGear-=1;
+	return currentGear;
+	}
+	
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.vehicle;
+
+public abstract class Vehicle {
+	protected static int vehicleNo;
+	 protected static String engineStatus;
+	 protected static int currentGear;
+	 public Vehicle(int vehicleNo) {
+		 this.vehicleNo=vehicleNo;
+		}
+	 public abstract void ignite();
+	 public abstract int changeGear(int flag);
+	 public abstract void stop();
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------
+==================================================================================
+
+3-2. EMPLOYEE : 
+
+
+package com.employee;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Scanner;
+import java.util.*;
+
+
+
+public class Employee implements Serializable{
+  int   empId;		
+String empName;		 
+String grade	;
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" + "empId=" + empId + ", empName=" + empName + ", grade=" + grade + '}';
+    }
+}
+class TestFile{
+    public static void main(String[] args) throws Exception{
+        Scanner s=new Scanner(System.in);
+        System.out.println("enter the number of employees'");
+        int n=s.nextInt();
+        Employee[] e=new Employee[n];
+  for(int i=0;i<n;i++){
+      
+  e[ i]=new Employee();
+  System.out.println("enter the employee id");
+       e[i].setEmpId(s.nextInt());
+       System.out.println("enter the employee name");
+        e[i].setEmpName(s.next());
+        System.out.println("Grades U1or U2 or  U3 or U4 or  P1 or P2");
+        System.out.println("enter the employee grade");
+       e[i].setGrade(s.next());{
+       if (e[i].getGrade().matches("U1")){
+           System.out.println("garde is U1");}
+       else if(e[i].getGrade().matches("U2")){
+           System.out.println("garde is U2");}
+        else if(e[i].getGrade().matches("U3")){
+           System.out.println("garde is U3");}
+         else if(e[i].getGrade().matches("U4")){
+           System.out.println("garde is U4");}
+       else if(e[i].getGrade().matches("P1")){
+           System.out.println("garde is P1");}
+       else if(e[i].getGrade().matches("P2")){
+           System.out.println("grade is P2");}
+  
+       else
+           throw new InvalidGradeException();
+    
+}
+
+           
+       }
+  for(int i=0;i<n;i++)
+           {
+             System.out.println ("employee id:"+e[i].getEmpId()+"employee name"+e[i].getEmpName()+"employee grade"+e[i].getGrade());
+               
+           }
+  
+  
+  File f=new File("empdetails.txt");
+  FileOutputStream fos=new FileOutputStream(f);
+  ObjectOutputStream oos=new ObjectOutputStream(fos);
+  oos.writeObject(e);
+  fos.close();
+  oos.close();
+ System.out.println("serialisation successfull");
+  FileInputStream fis=new FileInputStream(f);
+  ObjectInputStream ois=new ObjectInputStream(fis);
+  Employee E[ ]=(Employee[ ]) ois.readObject();
+  fis.close();
+   ois.close();
+  System.out.println("Deserialisation successfull");
+  for(int i=0;i<n;i++)
+          {
+            System.out.println ("employee id:"+E[i].getEmpId()+"employee name"+E[i].getEmpName()+"employee grade"+E[i].getGrade());
+               
+           }
+  
+          
+  
+  
+  
+  
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+=========================================================================================

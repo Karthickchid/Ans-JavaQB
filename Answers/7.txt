@@ -1,0 +1,129 @@
+7-1. BANK AND BANK UTIL: 
+	
+package com.bank;
+import com.bank.InvalidInputException1;
+
+public class Account {
+    String accountNumber;
+    double accountBalance;
+    String chequeBookStatus;
+
+    public Account(String accountNumber, double accountBalance, String chequeBookStatus) {
+        this.accountNumber = accountNumber;
+        this.accountBalance = accountBalance;
+        this.chequeBookStatus = chequeBookStatus;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) throws InvalidInputException1 
+    { 
+        if(accountNumber.substring(0, 4).equals("ACC"))
+        this.accountNumber = accountNumber;
+    
+    else
+    throw new InvalidInputException1();
+    }
+    
+
+public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) throws InvalidInputException1 {
+        if(accountBalance>1000)
+{
+        this.accountBalance = accountBalance;
+}
+         else
+    throw new InvalidInputException1();
+    }
+    
+   
+
+ public String getChequeBookStatus() {
+        return chequeBookStatus;
+    }
+
+    public void setChequeBookStatus(String chequeBookStatus) throws InvalidInputException1 {
+        if(chequeBookStatus.equals("YES")||chequeBookStatus.equals("NO")){
+        this.chequeBookStatus = chequeBookStatus;
+    }else 
+            throw new InvalidInputException1();
+}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.bank;
+import java.util.Iterator;
+import java.util.TreeSet;
+public class Customer {
+    
+ int  custNo;			
+String custName;		
+int custPhone;		
+TreeSet<Account> account=new TreeSet<Account>();	
+
+public Customer(int custNo, String custName, int custPhone) {
+        this.custNo = custNo;
+        this.custName = custName;
+        this.custPhone = custPhone;
+    }
+public void addNewAccount (Account OB) {
+    account.add(OB);
+}
+
+  public TreeSet getAccountList ( ) {
+    Iterator<Account>itr=account.iterator();
+    while(itr.hasNext()){
+    Account acc=itr.next();
+    System.out.println(acc);
+    }
+        return account;
+    
+}
+    public void printBal(Account al) {
+         Iterator<Account>itr=account.iterator();
+    while(itr.hasNext()){
+    Account acc=itr.next();
+    System.out.println(acc);
+   System.out.println(account);
+        
+    }
+}
+}
+------------------------------------------------------------------------------------------------------------
+package com.bank;
+public class InvalidInputException1 extends Exception {
+
+    public InvalidInputException1() {
+        System.out.println("please enter correct data");
+    }
+    
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.bankutil;
+
+import com.bank.Account;
+import com.bank.Customer;
+import java.util.Scanner;
+public class BankUtil {
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+          System.out.println("enter the details of customer");
+        Customer c=new Customer(s.nextInt(),s.next(),s.nextInt());
+        System.out.println("enter the details of account1");
+        Account  a1 =new Account(s.next(),s.nextDouble(),s.next());
+          System.out.println("enter the details of account2");
+        Account  a2 =new Account(s.next(),s.nextDouble(),s.next());
+        c.addNewAccount(a1);
+        c.addNewAccount(a2);
+        c.getAccountList();
+        c.printBal(a1);
+        
+    }
+    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+=============================================================
