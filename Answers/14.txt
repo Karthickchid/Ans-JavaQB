@@ -1,0 +1,179 @@
+14-1. EMPLOYEE EMPTEST MYTHREAD:
+
+package com.employee;
+
+public class Employee {
+	int empNo;
+	float basicPay, hra, conveyance, epf, tax;
+	
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package com.employee;
+
+import java.util.Enumeration;
+import java.util.Scanner;
+import java.util.Vector;
+
+
+
+public class empTest {
+	public static void main(String[] args) {
+		System.out.println("Enter the No of Employees\t:");
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		Vector v=new Vector();
+		for(int i=0;i<n;i++)
+		{
+			Employee e=new Employee();
+			System.out.println("Enter Employee "+(i+1)+" Details");
+			System.out.println("Emter empNo\t:");
+			e.empNo=sc.nextInt();
+			System.out.println("Enter Basic pay, hra, conveyance, epf, tax ");
+			e.basicPay=sc.nextFloat();
+			e.hra=sc.nextFloat();
+			e.conveyance=sc.nextFloat();
+			e.epf=sc.nextFloat();
+			e.tax=sc.nextFloat();
+			v.add(e);
+		}
+		
+		Enumeration e=v.elements();
+			while (e.hasMoreElements())
+			{
+				synchronized (e) 
+				{
+					MyThread m = new MyThread((Employee) e.nextElement());
+					m.start();
+	
+				}
+			}
+		System.out.println("Main thread");
+	
+	}
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.employee;
+
+
+public class MyThread extends Thread{
+	Employee e;
+	static int emp_count=1;
+	MyThread(Employee e)
+	{
+		this.e=e;
+	}
+	public void run()
+	{
+		
+		
+			float NetSalary=e.basicPay+e.hra+e.conveyance-e.epf-e.tax;
+			System.out.println("NetSalary of Employee "+emp_count+" with EMP_Id "+e.empNo+" is... "+NetSalary);
+			emp_count++;
+		
+	}
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================
+14-2. ACCOUNT SAVING ACCOUNT:
+
+package com.account;
+
+public abstract class Account {
+	int accNo    ;  	  	
+	double currentBalance ; 	
+	String accHolder  ;	   
+	String address;
+	public Account(int accNo, double currentBalance, String accHolder,
+			String address) {
+		super();
+		this.accNo = accNo;
+		this.currentBalance = currentBalance;
+		this.accHolder = accHolder;
+		this.address = address;
+	}	
+	abstract double calculateInterest(double amt);
+
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package com.account;
+
+import java.util.Scanner;
+
+public class Bank {
+
+	
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int accNo;
+		double currentBalance;
+		String accHolder;
+		String address;
+		double intRate;
+		System.out.println("Enter accNo"); accNo=sc.nextInt();
+		System.out.println("Enter CurrentBalance "); currentBalance=sc.nextDouble();
+		
+		if(currentBalance<=0)
+		{
+			try {
+				throw new MinBalanceException();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		else
+		{
+			System.out.println("Enter accHolder"); accHolder=sc.next();
+			System.out.println("Enter address "); address=sc.next();
+			System.out.println("Enter intRate"); intRate=sc.nextDouble();
+			SavingAccount sa=new SavingAccount(accNo,currentBalance, accHolder, address, intRate);
+			
+			System.out.println("Total amount is ");
+			double total=currentBalance+sa.calculateInterest(currentBalance);
+			System.out.println(total);
+		}
+
+	}
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.account;
+
+public class MinBalanceException extends RuntimeException{
+
+	public MinBalanceException() {
+		super("Min Balance Exception");
+		
+	}
+	
+	
+
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+apackage com.account;
+
+public class SavingAccount extends Account {
+	double  intRate ;
+
+	public SavingAccount(int accNo, double currentBalance, String accHolder,
+			String address, double intRate) {
+		super(accNo, currentBalance, accHolder, address);
+		this.intRate = intRate;
+	}
+
+	@Override
+	double calculateInterest(double amt) {
+		
+		return (intRate/100)*amt ;
+	}
+	
+  
+
+   
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+===================================

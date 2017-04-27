@@ -1,0 +1,146 @@
+15-1. APP & BOOK:
+
+package org.app;
+
+import java.util.Scanner;
+
+import org.book.Book;
+import org.book.Catalog;
+
+public class TestCatalog {
+
+	public static void main(String[] args) {
+		Catalog c = new Catalog(); 
+		Scanner sc = new Scanner(System.in);
+		Book b1= new Book();
+		Book b2= new Book();
+		b1.setTitle("java");
+		b1.setAuthor("rahim");
+		b1.setBookId(1001);
+		b1.setStatus("A");
+		b1.setType("technical");
+		b2.setTitle("python");
+		b2.setAuthor("goutham");
+		b2.setBookId(1002);
+		b2.setStatus("A");
+		b2.setType("technical");
+		c.addBook(b1);
+		c.addBook(b2);
+		
+		/*Book[] b = new Book[2];
+		for(int i=0;i<2;i++){
+			System.out.println("enter title");
+			String s1=sc.next();
+			b[i].setTitle(s1);
+			System.out.println("enter bookid");
+			b[i].setBookId(sc.nextInt());
+			System.out.println("enter author name");
+			b[i].setAuthor(sc.next());
+			System.out.println("enter status");
+			b[i].setStatus(sc.next());
+			System.out.println("enter type");
+			b[i].setType(sc.next());
+			c.addBook(b[i]);
+			}*/
+		c.showBooks();
+		c.searchBook(1001);
+
+	}
+
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+package org.book;
+class InvalidDataException extends RuntimeException{
+	InvalidDataException(String s){
+		super(s);
+	}
+}
+
+
+public class Book {
+	private int bookId;
+	private String title;
+	private String author;
+	private String type;
+	private String status;
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		InvalidDataException ide2 = new InvalidDataException("incorrect type");
+		if(type.equals("technical")||type.equals("nontechnical"))
+		this.type = type;
+		else
+			throw ide2;
+		
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		InvalidDataException ide1 = new InvalidDataException("incorrect status");
+		if(status.equals("A")||status.equals("N"))
+		this.status = status;
+		else
+			throw ide1;
+		
+	}
+	
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package org.book;
+
+import java.util.ArrayList;
+
+public class Catalog {
+	private ArrayList<Book> books = new ArrayList<Book>(); 
+	public void addBook(Book b){
+		books.add(b);
+	}
+	public void showBooks(){
+		for(int i=0;i<2;i++){
+		System.out.println(books.get(i).getAuthor());
+		System.out.println(books.get(i).getBookId());
+		System.out.println(books.get(i).getStatus());
+		System.out.println(books.get(i).getTitle());
+		System.out.println(books.get(i).getType());
+		System.out.println("-----------------------");
+		
+	}}
+	public String searchBook(int id){
+		int count=0;
+		for(int i=0;i<2;i++){
+			if(books.get(i).getBookId()==id){
+				System.out.println(books.get(i).getAuthor());
+				System.out.println(books.get(i).getBookId());
+				System.out.println(books.get(i).getStatus());
+				System.out.println(books.get(i).getTitle());
+				System.out.println(books.get(i).getType());
+				count++;
+			}
+		}
+		if(count==0)
+				System.out.println("book not present");
+		return null;
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+==============================

@@ -1,0 +1,133 @@
+17-1. DOCTOR:
+
+package doctor;
+
+
+ 
+public class Appointment {
+   private String date;
+   private int noOfPatients;
+
+    public Appointment(String date, int noOfPatients) {
+        this.date = date;
+        this.noOfPatients = noOfPatients;
+    }
+
+
+    
+    public void setNoOfPatients(int noOfPatients) throws InvalidDataException {
+        if(noOfPatients<16)
+        this.noOfPatients = noOfPatients;
+        else
+            throw new InvalidDataException();
+    }
+
+     public String getDate() {
+        return date;
+    }
+
+    public int getNoOfPatients() {
+        return noOfPatients;
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package doctor;
+import java.util.ArrayList;
+
+ public class Doctor
+    {
+        private String docId;
+private String docName;
+private ArrayList<Appointment> apptList = new ArrayList<Appointment>(2);
+
+
+
+public void addAppointment(Appointment ob){
+  
+      apptList.add(ob);
+    
+}
+
+    public Doctor(String docId, String docName) {
+        this.docId = docId;
+        this.docName = docName;
+    }
+
+public void printAppointment(){
+    for(int i=0;i<2;i++){
+  
+    System.out.println("Doctor id "+apptList.get(i).getDate());
+      System.out.println("no of patients"+apptList.get(i).getNoOfPatients());
+}
+}
+
+        public String getDocId() {
+            return docId;
+        }
+
+        public void setDocId(String docId) {
+            this.docId = docId;
+        }
+
+        public String getDocName() {
+            return docName;
+        }
+
+        public void setDocName(String docName) {
+            this.docName = docName;
+        }
+
+        public ArrayList getApptList() {
+            return apptList;
+        }
+
+        public void setApptList(ArrayList apptList) {
+            this.apptList = apptList;
+            
+        }
+
+
+    }
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package doctor;
+public class InvalidDataException extends Exception {
+    public InvalidDataException() {
+        System.out.println("invalid data exception");
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+package doctor;
+import java.util.Scanner;
+public class TestClinic
+{
+    public static void main(String[] args) throws InvalidDataException
+    {
+         
+          Scanner s=new Scanner(System.in);  
+          Doctor d[]=new Doctor[2];
+          for(int i=0;i<2;i++)
+          {
+              System.out.println("Enter the details of doctor "+i+"Doctor id,doctor name");
+              d[i] = new Doctor(s.next(),s.next());
+              for(int j=0;j<2;j++)
+              {
+                  System.out.println("Enter the details of appointment "+j+" of doctor "+i);
+                  Appointment a = new Appointment(s.next(),s.nextInt());
+                  d[i].addAppointment(a);
+              }
+          }
+         System.out.println("Enter the doc id u want to search");
+         String k = s.next();
+         for(int i=0;i<2;i++)
+         {
+             if(d[i].getDocId().equals(k))
+             {
+                 d[i].printAppointment();
+                 break;
+             }
+         }
+     
+       
+    }
+}

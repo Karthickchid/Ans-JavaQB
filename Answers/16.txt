@@ -1,0 +1,223 @@
+16-1. ORDER:
+package com.order;
+import com.order.Order;
+import java.util.ArrayList;
+public class Customer {
+    
+  int  customerID;		
+String customerName;				
+
+ ArrayList<Order> orderList = new ArrayList<Order>(2);
+
+    public Customer(int customerID, String customerName) {
+        this.customerID = customerID;
+        this.customerName = customerName;
+    }
+
+public void addNewOrder(Order ob) {
+    orderList.add( ob);           
+}
+public ArrayList getOrderList() {
+    for(int i=0;i<2;i++){
+        System.out.println(orderList.get(i));  
+    }
+    return orderList;
+    
+}
+public void changeOrderStatus (int orderID, String status ) throws InvalidSatusException {
+  for(int i=0;i<2;i++){
+      if(orderList.get(i).getOrderID()==orderID){
+          
+         orderList.get(i).setOrderStatus(status);
+          
+      }
+      else 
+        System.out.println("getting order"); 
+  }
+}
+   
+       public void display(){
+            for(int i=0;i<2;i++){
+                System.out.println("order id"+  orderList.get(i).getOrderID()+"status"+orderList.get(i).getOrderStatus()+"order type"+orderList.get(i).getOrderType()+"order description"+orderList.get(i).getOrderDescription());
+    
+          
+         
+          
+      }
+           
+           
+           
+       }
+   }
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+
+package com.order;
+class InvalidSatusException extends Exception {
+
+    public InvalidSatusException() {
+        System.out.println("enter a valid status");
+    }
+    
+}
+---------------------------------------------------------------------------------------------------------------------------------------
+package com.order;
+public class Order {
+   private int orderID ;		
+private String orderType;				
+private String orderDescription;			
+private String orderStatus;				
+
+    public Order(int orderID, String orderType, String orderDescription) {
+        this.orderID = orderID;
+        this.orderType = orderType;
+        this.orderDescription = orderDescription;
+    }
+
+    public void setOrderStatus(String orderStatus) throws InvalidSatusException {
+        if(orderStatus.equals("Open")||orderStatus.equals("Close")){
+        this.orderStatus = orderStatus;
+    }
+        else
+            throw new InvalidSatusException();    
+    
+}
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public String getOrderDescription() {
+        return orderDescription;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", orderType=" + orderType + ", orderDescription=" + orderDescription + ", orderStatus=" + orderStatus + '}';
+    }
+    
+    
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+package com.order;
+import java.util.Scanner;
+public class TestOrder {
+    public static void main(String[] args) throws InvalidSatusException{
+        Scanner s=new Scanner(System.in);
+        System.out.println("enter details of customer cust id cust name");
+        Customer c=new Customer(s.nextInt(),s.next());
+        System.out.println("enter details of order1 orderid type description ");
+        Order O1=new Order(s.nextInt(),s.next(),s.next());
+         System.out.println("enter details of order2 orderid type description ");
+          Order O2=new Order(s.nextInt(),s.next(),s.next());
+          System.out.println("enter order status of order1");
+            O1.setOrderStatus(s.next());
+          System.out.println("enter order status of order1");
+        O2.setOrderStatus(s.next());
+          c.addNewOrder(O1);
+          c.addNewOrder(O2);
+          System.out.println("enter order Id and Status to modify" );
+          c.changeOrderStatus(s.nextInt(),s.next());
+        c.display();
+        }
+    
+}        
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+==================================================================================================
+16-2. STORE STUDENT:
+
+package com.student;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class StoreStudent  {
+
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter Student RollNo:");
+		int rollNo=Integer.parseInt(br.readLine());
+		System.out.println("Enter Student Name:");
+		String name=br.readLine();
+		System.out.println("Enter Major:");
+		String major=br.readLine();
+		Student student=new Student();
+		student.setRollNo(rollNo);
+		student.setName(name);
+		student.setMajor(major);
+		String fileName=args[0];
+		FileOutputStream fos=new FileOutputStream(fileName);
+		ObjectOutputStream oos=new ObjectOutputStream(fos);
+		oos.writeObject(student);
+		FileInputStream fis=new FileInputStream(fileName);
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		Student std=(Student)ois.readObject();
+		System.out.println("RollNo"+"\t"+"Name"+"\t"+"Major");
+		System.out.println(std.getRollNo()+"\t"+std.getName()+"\t"+std.getMajor());
+		
+		
+
+	}
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.student;
+
+import java.io.Serializable;
+
+public class Student implements Serializable{
+
+	int rollNo;
+	String name;
+	String major;
+	
+	
+	public int getRollNo() {
+		return rollNo;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public String getMajor() {
+		return major;
+	}
+
+
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+========================================================
